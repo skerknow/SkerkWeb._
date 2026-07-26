@@ -1,0 +1,719 @@
+/* ============================================
+   ESTILOS PARA LAS NUEVAS SECCIONES
+   Pizarra · Cartas · Música · Gustos
+   ============================================ */
+
+/* ============ PIZARRA ============ */
+.pizarra-section { padding-bottom: 40px; }
+
+.pizarra-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  background: rgba(26, 10, 46, 0.6);
+  border: 1.5px solid #000;
+  border-radius: 8px;
+  margin: 20px 0 12px;
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(45, 27, 78, 0.5);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 6px;
+}
+
+.tool-label {
+  font-size: 0.85rem;
+  color: var(--gray-300);
+  font-weight: 600;
+}
+
+.tool-btn {
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid #000;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.tool-btn:hover {
+  background: var(--purple-600);
+  transform: translateY(-2px);
+}
+
+.tool-btn.active {
+  background: var(--grad-bot);
+  border-color: var(--purple-300);
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.5);
+}
+
+.color-picker {
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid #000;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  padding: 2px;
+}
+
+.color-presets {
+  display: flex;
+  gap: 4px;
+}
+
+.color-preset {
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.color-preset:hover { transform: scale(1.15); }
+
+.size-slider {
+  width: 100px;
+  cursor: pointer;
+}
+
+.size-value {
+  font-size: 0.9rem;
+  color: var(--white);
+  font-weight: 600;
+  min-width: 28px;
+}
+
+.pizarra-container {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+#pizarraCanvas {
+  display: block;
+  width: 100%;
+  height: 500px;
+  cursor: crosshair;
+  background: #ffffff;
+  touch-action: none;
+}
+
+.pizarra-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #999;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4px 12px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.pizarra-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: rgba(26, 10, 46, 0.6);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--gray-300);
+}
+
+.refresh-btn {
+  background: var(--grad-bot);
+  border: 1px solid var(--purple-300);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover { transform: translateY(-2px); }
+
+/* Imágenes flotantes en la pizarra */
+.pizarra-img {
+  position: absolute;
+  cursor: move;
+  border: 2px dashed transparent;
+  transition: border-color 0.2s ease;
+}
+
+.pizarra-img.selected {
+  border-color: var(--purple-500);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+.pizarra-img .resize-handle {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  background: var(--purple-500);
+  border: 2px solid #000;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  display: none;
+}
+
+.pizarra-img.selected .resize-handle { display: block; }
+
+.pizarra-img .delete-handle {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  background: #e63946;
+  border: 2px solid #000;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.pizarra-img.selected .delete-handle { display: flex; }
+
+/* ============ CARTAS ============ */
+.cartas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.carta-card {
+  background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.carta-header {
+  padding: 14px 18px;
+  background: rgba(26, 10, 46, 0.8);
+  border-bottom: 1px solid #000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carta-num {
+  width: 28px;
+  height: 28px;
+  background: var(--grad-bot);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+  border: 1.5px solid #000;
+}
+
+.carta-label {
+  font-family: var(--font-script);
+  font-size: 1.3rem;
+  color: var(--purple-300);
+}
+
+.carta-text {
+  flex: 1;
+  width: 100%;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 1rem;
+  line-height: 1.7;
+  resize: vertical;
+  min-height: 200px;
+  outline: none;
+}
+
+.carta-text::placeholder {
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+.carta-text:focus {
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 0 2px var(--purple-500);
+}
+
+.carta-footer {
+  padding: 8px 14px;
+  background: rgba(26, 10, 46, 0.8);
+  border-top: 1px solid #000;
+  font-size: 0.75rem;
+}
+
+.carta-saved {
+  color: var(--purple-300);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .cartas-grid { grid-template-columns: 1fr; }
+}
+
+/* ============ MÚSICA ============ */
+.musica-section { padding-bottom: 40px; }
+
+.musica-add-row,
+.musica-folder-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.musica-input,
+.musica-folder-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #000;
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.musica-input::placeholder,
+.musica-folder-input::placeholder {
+  color: var(--gray-400);
+}
+
+.musica-input:focus,
+.musica-folder-input:focus {
+  border-color: var(--purple-500);
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.musica-folder-select {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #000;
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.musica-folder-select option {
+  background: var(--purple-900);
+  color: var(--white);
+}
+
+.musica-add-btn,
+.musica-folder-btn {
+  padding: 12px 20px;
+  background: var(--grad-bot);
+  border: 1.5px solid #000;
+  border-radius: 8px;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.musica-add-btn:hover,
+.musica-folder-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+.musica-player-area {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.musica-player {
+  background: rgba(26, 10, 46, 0.7);
+  border: 1.5px solid #000;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+#youtubePlayer {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#youtubePlayer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.player-info {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.player-now {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.musica-list-area {
+  background: rgba(26, 10, 46, 0.7);
+  border: 1.5px solid #000;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+}
+
+.musica-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.musica-list-header h3 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--white);
+}
+
+.musica-count {
+  font-size: 0.8rem;
+  color: var(--purple-300);
+}
+
+.musica-list {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.musica-empty {
+  text-align: center;
+  padding: 30px 12px;
+  color: var(--gray-400);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.musica-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(74, 44, 122, 0.4);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.musica-item:hover {
+  background: rgba(74, 44, 122, 0.7);
+  border-color: var(--purple-400);
+  transform: translateX(4px);
+}
+
+.musica-item.playing {
+  background: var(--grad-bot);
+  border-color: var(--purple-300);
+}
+
+.musica-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #000;
+}
+
+.musica-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.musica-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.musica-folder-tag {
+  font-size: 0.72rem;
+  color: var(--purple-300);
+  margin-top: 2px;
+}
+
+.musica-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.musica-action-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.musica-action-btn:hover {
+  background: var(--purple-600);
+}
+
+.musica-action-btn.delete:hover {
+  background: #e63946;
+}
+
+@media (max-width: 900px) {
+  .musica-player-area { grid-template-columns: 1fr; }
+}
+
+/* ============ GUSTOS ============ */
+.gustos-section { padding-bottom: 40px; }
+
+.gustos-intro {
+  background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid #000;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.gustos-intro::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
+}
+
+.gustos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.gusto-card {
+  background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid #000;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.gusto-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
+}
+
+.gusto-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.gusto-icon {
+  font-size: 1.8rem;
+}
+
+.gusto-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--white);
+}
+
+.gusto-input-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.gusto-input {
+  flex: 1;
+  padding: 9px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #000;
+  border-radius: 6px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.gusto-input::placeholder { color: var(--gray-400); }
+
+.gusto-input:focus {
+  border-color: var(--purple-500);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.gusto-add-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--grad-bot);
+  border: 1.5px solid #000;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gusto-add-btn:hover { transform: scale(1.1); }
+
+.gusto-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.gusto-list:empty::after {
+  content: 'Aún no hay gustos. ¡Agrega el primero!';
+  display: block;
+  text-align: center;
+  padding: 20px 8px;
+  color: var(--gray-400);
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.gusto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(74, 44, 122, 0.4);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: var(--white);
+  animation: gustoIn 0.3s ease;
+}
+
+@keyframes gustoIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.gusto-delete {
+  background: none;
+  border: none;
+  color: #ff6b9d;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.gusto-delete:hover { color: #e63946; }
+
+.gusto-list::-webkit-scrollbar { width: 6px; }
+.gusto-list::-webkit-scrollbar-thumb {
+  background: var(--purple-300);
+  border-radius: 3px;
+}
+.musica-list::-webkit-scrollbar { width: 6px; }
+.musica-list::-webkit-scrollbar-thumb {
+  background: var(--purple-300);
+  border-radius: 3px;
+}

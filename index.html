@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="sections.css" />
 </head>
 <body>
 
@@ -23,18 +24,19 @@
     <button class="drawer-close" id="drawerClose" aria-label="Cerrar menú">✕</button>
     <h3 class="drawer-title">Menú</h3>
     <nav class="drawer-nav">
-      <a href="#inicio" class="drawer-link">Inicio</a>
-      <a href="#mensaje" class="drawer-link">Mensaje</a>
-      <a href="#video" class="drawer-link">Video</a>
-      <a href="#charla" class="drawer-link">Charla</a>
-      <a href="#fotos" class="drawer-link">Fotos</a>
-      <a href="#cartas" class="drawer-link">Cartas</a>
-      <a href="creador.html" class="drawer-link">Creador</a>
+      <a href="#inicio" class="drawer-link">🏠 Inicio</a>
+      <a href="#mensaje" class="drawer-link">💌 Mensaje</a>
+      <a href="#video" class="drawer-link">🎬 Video</a>
+      <a href="#pizarra" class="drawer-link">🎨 Pizarra</a>
+      <a href="#cartas" class="drawer-link">✉️ Cartas</a>
+      <a href="#musica" class="drawer-link">🎵 Música</a>
+      <a href="#gustos" class="drawer-link">⭐ Gustos</a>
+      <a href="#fotos" class="drawer-link">📷 Fotos</a>
+      <a href="creador.html" class="drawer-link">👤 Creador</a>
     </nav>
     <p class="drawer-footer">Feliz cumpleaños Valeria :D</p>
   </aside>
 
-  <!-- ============ CONTENIDO PRINCIPAL ============ -->
   <main class="main-content" id="inicio">
 
     <header class="main-header">
@@ -52,6 +54,7 @@
       </a>
     </header>
 
+    <!-- Mensaje + Video -->
     <section class="content-grid">
       <article class="card text-card" id="mensaje">
         <div class="card-header">
@@ -72,13 +75,7 @@
           <span class="card-hint">Para ti</span>
         </div>
         <div class="video-wrapper">
-          <video
-            controls
-            loop
-            playsinline
-            preload="metadata"
-            poster=""
-          >
+          <video controls loop playsinline preload="metadata">
             <source src="assets/video/valee.mp4" type="video/mp4" />
             Tu navegador no soporta el elemento de video.
           </video>
@@ -86,21 +83,217 @@
       </article>
     </section>
 
-    <section class="extra-section" id="charla">
-      <h2 class="section-title">Charla</h2>
-      <p class="section-desc">Próximamente: un espacio para dejar comentarios en vivo.</p>
+    <!-- ============ PIZARRA ============ -->
+    <section class="extra-section pizarra-section" id="pizarra">
+      <h2 class="section-title">🎨 Pizarra Online</h2>
+      <p class="section-desc">Una pizarra compartida. Lo que dibujes o escribas aquí lo verá cualquier persona que entre a la página, y también podrá editarlo. ¡Siéntete libre de dejar tu huella! 💜</p>
+
+      <div class="pizarra-toolbar">
+        <div class="tool-group">
+          <button class="tool-btn active" data-tool="pen" title="Lápiz">✏️</button>
+          <button class="tool-btn" data-tool="line" title="Línea">📏</button>
+          <button class="tool-btn" data-tool="rect" title="Rectángulo">⬜</button>
+          <button class="tool-btn" data-tool="circle" title="Círculo">⭕</button>
+          <button class="tool-btn" data-tool="text" title="Texto">🔤</button>
+          <button class="tool-btn" data-tool="eraser" title="Borrador">🧹</button>
+        </div>
+        <div class="tool-group">
+          <label class="tool-label">Color:</label>
+          <input type="color" class="color-picker" id="pizarraColor" value="#ffffff" />
+          <div class="color-presets">
+            <button class="color-preset" style="background:#ffffff" data-color="#ffffff"></button>
+            <button class="color-preset" style="background:#8b5cf6" data-color="#8b5cf6"></button>
+            <button class="color-preset" style="background:#c4b5fd" data-color="#c4b5fd"></button>
+            <button class="color-preset" style="background:#ff6b9d" data-color="#ff6b9d"></button>
+            <button class="color-preset" style="background:#ffd23f" data-color="#ffd23f"></button>
+            <button class="color-preset" style="background:#06d6a0" data-color="#06d6a0"></button>
+            <button class="color-preset" style="background:#000000" data-color="#000000"></button>
+          </div>
+        </div>
+        <div class="tool-group">
+          <label class="tool-label">Tamaño:</label>
+          <input type="range" class="size-slider" id="pizarraSize" min="1" max="40" value="3" />
+          <span class="size-value" id="pizarraSizeValue">3</span>
+        </div>
+        <div class="tool-group">
+          <button class="tool-btn" id="addImageBtn" title="Insertar imagen">🖼️</button>
+          <input type="file" id="imageInput" accept="image/*" style="display:none" />
+          <button class="tool-btn" id="clearBtn" title="Limpiar todo">🗑️</button>
+          <button class="tool-btn" id="saveBtn" title="Guardar">💾</button>
+        </div>
+      </div>
+
+      <div class="pizarra-container">
+        <canvas id="pizarraCanvas" width="1200" height="700"></canvas>
+        <div class="pizarra-hint">Haz clic para empezar a dibujar · Inserta imágenes y arrástralas para moverlas · Esquina inferior derecha para redimensionarlas</div>
+      </div>
+
+      <div class="pizarra-status">
+        <span id="pizarraStatus">↻ Cargando estado compartido...</span>
+        <button class="refresh-btn" id="refreshPizarra" title="Refrescar">🔄 Refrescar</button>
+      </div>
     </section>
 
+    <!-- ============ CARTAS ============ -->
+    <section class="extra-section cartas-section" id="cartas">
+      <h2 class="section-title">✉️ Cartas</h2>
+      <p class="section-desc">Tres cartas digitales que cualquiera puede escribir. Lo que escribas se guardará y todos lo verán.</p>
+
+      <div class="cartas-grid">
+        <article class="carta-card">
+          <header class="carta-header">
+            <span class="carta-num">1</span>
+            <span class="carta-label">Carta</span>
+          </header>
+          <textarea class="carta-text" placeholder="Escribe aquí tu carta..." rows="8"></textarea>
+          <div class="carta-footer">
+            <span class="carta-saved">💾 Guardado</span>
+          </div>
+        </article>
+
+        <article class="carta-card">
+          <header class="carta-header">
+            <span class="carta-num">2</span>
+            <span class="carta-label">Carta</span>
+          </header>
+          <textarea class="carta-text" placeholder="Escribe aquí tu carta..." rows="8"></textarea>
+          <div class="carta-footer">
+            <span class="carta-saved">💾 Guardado</span>
+          </div>
+        </article>
+
+        <article class="carta-card">
+          <header class="carta-header">
+            <span class="carta-num">3</span>
+            <span class="carta-label">Carta</span>
+          </header>
+          <textarea class="carta-text" placeholder="Escribe aquí tu carta..." rows="8"></textarea>
+          <div class="carta-footer">
+            <span class="carta-saved">💾 Guardado</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ MÚSICA ============ -->
+    <section class="extra-section musica-section" id="musica">
+      <h2 class="section-title">🎵 Música</h2>
+      <p class="section-desc">Tu propio reproductor de música. Pega el link de YouTube de tu canción favorita y se agregará a tu lista. ¡Como Spotify pero tuyo!</p>
+
+      <div class="musica-add-row">
+        <input type="text" class="musica-input" id="musicaInput" placeholder="Pega aquí el link de YouTube (ej: https://youtube.com/watch?v=...)" />
+        <select class="musica-folder-select" id="musicaFolderSelect">
+          <option value="">🎵 Sin carpeta</option>
+        </select>
+        <button class="musica-add-btn" id="musicaAddBtn">+ Agregar</button>
+      </div>
+
+      <div class="musica-folder-row">
+        <input type="text" class="musica-folder-input" id="musicaFolderInput" placeholder="Nombre de nueva carpeta (ej: Reggaetón, Pop, Mis favoritas...)" />
+        <button class="musica-folder-btn" id="musicaFolderBtn">+ Crear carpeta</button>
+      </div>
+
+      <div class="musica-player-area">
+        <div class="musica-player">
+          <div id="youtubePlayer"></div>
+          <div class="player-info" id="playerInfo">
+            <p class="player-now">▶ Selecciona una canción para empezar</p>
+          </div>
+        </div>
+
+        <div class="musica-list-area">
+          <div class="musica-list-header">
+            <h3>Lista de canciones</h3>
+            <span class="musica-count" id="musicaCount">0 canciones</span>
+          </div>
+          <ul class="musica-list" id="musicaList">
+            <li class="musica-empty">Aún no hay canciones. ¡Agrega la primera!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GUSTOS ============ -->
+    <section class="extra-section gustos-section" id="gustos">
+      <h2 class="section-title">⭐ Gustos</h2>
+      <p class="gustos-intro">
+        Valeria, este es tu espacio para guardar todo lo que te gusta. Cuéntanos qué objetos te hacen feliz,
+        qué aromas te transportan, qué comida te consuela, qué series te atraparon y qué música te hace vibrar.
+        Cada gusto que compartas será una pista para que el próximo regalo sea aún más tú. 🎁✨
+        No hay respuestas correctas ni incorrectas, solo tu esencia plasmada en palabras.
+        ¡Llena estos rincones con lo que te hace única!
+      </p>
+
+      <div class="gustos-grid">
+        <article class="gusto-card" data-category="objetos">
+          <header class="gusto-header">
+            <span class="gusto-icon">🎁</span>
+            <h3 class="gusto-title">Objetos</h3>
+          </header>
+          <div class="gusto-input-row">
+            <input type="text" class="gusto-input" placeholder="Ej: peluche, carta, libro..." />
+            <button class="gusto-add-btn">+</button>
+          </div>
+          <ul class="gusto-list"></ul>
+        </article>
+
+        <article class="gusto-card" data-category="aromas">
+          <header class="gusto-header">
+            <span class="gusto-icon">🌸</span>
+            <h3 class="gusto-title">Aromas</h3>
+          </header>
+          <div class="gusto-input-row">
+            <input type="text" class="gusto-input" placeholder="Ej: vainilla, café, lluvia..." />
+            <button class="gusto-add-btn">+</button>
+          </div>
+          <ul class="gusto-list"></ul>
+        </article>
+
+        <article class="gusto-card" data-category="comida">
+          <header class="gusto-header">
+            <span class="gusto-icon">🍕</span>
+            <h3 class="gusto-title">Comida</h3>
+          </header>
+          <div class="gusto-input-row">
+            <input type="text" class="gusto-input" placeholder="Ej: pizza, chocolate, sushi..." />
+            <button class="gusto-add-btn">+</button>
+          </div>
+          <ul class="gusto-list"></ul>
+        </article>
+
+        <article class="gusto-card" data-category="series">
+          <header class="gusto-header">
+            <span class="gusto-icon">📺</span>
+            <h3 class="gusto-title">Series</h3>
+          </header>
+          <div class="gusto-input-row">
+            <input type="text" class="gusto-input" placeholder="Ej: Friends, Stranger Things..." />
+            <button class="gusto-add-btn">+</button>
+          </div>
+          <ul class="gusto-list"></ul>
+        </article>
+
+        <article class="gusto-card" data-category="musica">
+          <header class="gusto-header">
+            <span class="gusto-icon">🎶</span>
+            <h3 class="gusto-title">Música</h3>
+          </header>
+          <div class="gusto-input-row">
+            <input type="text" class="gusto-input" placeholder="Ej: Bad Bunny, Taylor Swift..." />
+            <button class="gusto-add-btn">+</button>
+          </div>
+          <ul class="gusto-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ FOTOS ============ -->
     <section class="extra-section" id="fotos">
-      <h2 class="section-title">Fotos</h2>
+      <h2 class="section-title">📷 Fotos</h2>
       <p class="section-desc">Próximamente: galería de fotos con filtros por categoría.</p>
     </section>
 
-    <section class="extra-section" id="cartas">
-      <h2 class="section-title">Cartas</h2>
-      <p class="section-desc">Próximamente: cartas digitales de amigos y familia.</p>
-    </section>
-
+    <!-- Botón flotante BOT -->
     <button class="btn-bot" id="btnBot" aria-label="Abrir chat con el bot">
       <img src="assets/img/bot-avatar.png" alt="Bot" class="bot-img" />
       <span class="bot-label">BOT</span>
@@ -109,7 +302,7 @@
 
   </main>
 
-  <!-- ============ CHATBOT MODAL ============ -->
+  <!-- Chatbot -->
   <div class="chat-overlay" id="chatOverlay"></div>
   <div class="chat-widget" id="chatWidget" aria-hidden="true">
     <header class="chat-header">
@@ -130,17 +323,15 @@
     </div>
 
     <form class="chat-input-row" id="chatForm">
-      <input
-        type="text"
-        id="chatInput"
-        class="chat-input"
-        placeholder="Escríbele al bot..."
-        autocomplete="off"
-      />
+      <input type="text" id="chatInput" class="chat-input" placeholder="Escríbele al bot..." autocomplete="off" />
       <button type="submit" class="chat-send" aria-label="Enviar">➤</button>
     </form>
   </div>
 
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script src="script.js"></script>
+  <script src="sections.js"></script>
 </body>
 </html>

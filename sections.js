@@ -468,30 +468,94 @@
   }
 
   // =====================================================
-  // ============ MÚSICA ============
+  // ============ MÚSICA (Reproductor tipo MP3) ============
   // =====================================================
   let ytPlayer = null;
   let ytReady = false;
   let currentSongIndex = -1;
+  let progressInterval = null;
 
   // Exponer callback global para YouTube API
   window.onYouTubeIframeAPIReady = function () {
     ytPlayer = new YT.Player('youtubePlayer', {
-      height: '100%',
-      width: '100%',
+      height: '1',     // 1px - completamente oculto
+      width: '1',
       videoId: '',
-      playerVars: { autoplay: 0, controls: 1, modestbranding: 1, rel: 0 },
+      playerVars: {
+        autoplay: 0,
+        controls: 0,           // sin controles visibles
+        disablekb: 1,          // sin atajos de teclado
+        modestbranding: 1,
+        rel: 0,
+        playsinline: 1,
+        iv_load_policy: 3      // sin anotaciones
+      },
       events: {
-        onReady: () => { ytReady = true; },
+        onReady: () => {
+          ytReady = true;
+          ytPlayer.setVolume(80);
+        },
         onStateChange: (e) => {
-          if (e.data === YT.PlayerState.ENDED) {
-            // Auto-advance
+          const playPauseBtn = document.getElementById('mp3PlayPause');
+          if (e.data === YT.PlayerState.PLAYING) {
+            if (playPauseBtn) playPauseBtn.textContent = '⏸';
+            startProgressTracking();
+            updateDuration();
+          } else if (e.data === YT.PlayerState.PAUSED) {
+            if (playPauseBtn) playPauseBtn.textContent = '▶';
+            stopProgressTracking();
+          } else if (e.data === YT.PlayerState.ENDED) {
+            if (playPauseBtn) playPauseBtn.textContent = '▶';
+            stopProgressTracking();
             playNext();
           }
         }
       }
     });
   };
+
+  function startProgressTracking() {
+    stopProgressTracking();
+    progressInterval = setInterval(updateProgress, 500);
+  }
+
+  function stopProgressTracking() {
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
+    }
+  }
+
+  function formatTime(seconds) {
+    if (!seconds || isNaN(seconds)) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function updateProgress() {
+    if (!ytReady || !ytPlayer || !ytPlayer.getCurrentTime) return;
+    const current = ytPlayer.getCurrentTime() || 0;
+    const total = ytPlayer.getDuration() || 0;
+    const pct = total > 0 ? (current / total) * 100 : 0;
+
+    const progressBar = document.getElementById('mp3ProgressBar');
+    const progressHandle = document.getElementById('mp3ProgressHandle');
+    const currentTimeEl = document.getElementById('mp3CurrentTime');
+    const durationEl = document.getElementById('mp3Duration');
+
+    if (progressBar) progressBar.style.width = pct + '%';
+    if (progressHandle) progressHandle.style.left = pct + '%';
+    if (currentTimeEl) currentTimeEl.textContent = formatTime(current);
+    if (durationEl) durationEl.textContent = formatTime(total);
+  }
+
+  function updateDuration() {
+    if (!ytReady || !ytPlayer || !ytPlayer.getDuration) return;
+    const total = ytPlayer.getDuration() || 0;
+    const durationEl = document.getElementById('mp3Duration');
+    if (durationEl) durationEl.textContent = formatTime(total);
+  }
 
   function extractYouTubeId(url) {
     if (!url) return null;
@@ -514,7 +578,19 @@
     const folderBtn = document.getElementById('musicaFolderBtn');
     const list = document.getElementById('musicaList');
     const count = document.getElementById('musicaCount');
-    const playerInfo = document.getElementById('playerInfo');
+
+    // Elementos del reproductor MP3
+    const mp3CoverImg = document.getElementById('mp3CoverImg');
+    const mp3CoverPlaceholder = document.querySelector('.mp3-cover-placeholder');
+    const mp3Title = document.getElementById('mp3Title');
+    const mp3Folder = document.getElementById('mp3Folder');
+    const mp3PlayPause = document.getElementById('mp3PlayPause');
+    const mp3Prev = document.getElementById('mp3Prev');
+    const mp3Next = document.getElementById('mp3Next');
+    const mp3Volume = document.getElementById('mp3Volume');
+    const mp3Progress = document.getElementById('mp3Progress');
+    const mp3DownloadRow = document.getElementById('mp3DownloadRow');
+    const mp3DownloadBtn = document.getElementById('mp3DownloadBtn');
 
     function renderFolders() {
       const current = folderSelect.value;
@@ -573,6 +649,14 @@
         downBtn.textContent = '↓';
         downBtn.title = 'Bajar';
         downBtn.onclick = (e) => { e.stopPropagation(); moveSong(idx, 1); };
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'musica-action-btn download';
+        downloadBtn.textContent = '⬇';
+        downloadBtn.title = 'Descargar MP3';
+        downloadBtn.onclick = (e) => {
+          e.stopPropagation();
+          window.open(song.downloadUrl, '_blank', 'noopener');
+        };
         const delBtn = document.createElement('button');
         delBtn.className = 'musica-action-btn delete';
         delBtn.textContent = '✕';
@@ -580,6 +664,7 @@
         delBtn.onclick = (e) => { e.stopPropagation(); deleteSong(idx); };
         actions.appendChild(upBtn);
         actions.appendChild(downBtn);
+        actions.appendChild(downloadBtn);
         actions.appendChild(delBtn);
 
         li.appendChild(thumb);
@@ -595,18 +680,80 @@
       if (!sharedState.musica.songs[idx]) return;
       const song = sharedState.musica.songs[idx];
       currentSongIndex = idx;
+
+      // Actualizar UI del reproductor
+      if (mp3CoverImg) {
+        mp3CoverImg.src = `https://img.youtube.com/vi/${song.id}/hqdefault.jpg`;
+        mp3CoverImg.style.display = 'block';
+      }
+      if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'none';
+      if (mp3Title) mp3Title.textContent = song.title || `Canción ${idx + 1}`;
+      if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
+
+      // Mostrar botón de descarga
+      if (mp3DownloadRow) mp3DownloadRow.style.display = 'flex';
+      if (mp3DownloadBtn) mp3DownloadBtn.href = song.downloadUrl;
+
+      // Reproducir audio (video oculto)
       if (ytReady && ytPlayer) {
         ytPlayer.loadVideoById(song.id);
         ytPlayer.playVideo();
       }
-      playerInfo.innerHTML = `<p class="player-now">▶ Reproduciendo: <strong>${song.title || 'Canción ' + (idx + 1)}</strong></p>`;
       renderList();
     }
 
     function playNext() {
       if (currentSongIndex >= 0 && currentSongIndex < sharedState.musica.songs.length - 1) {
         playSong(currentSongIndex + 1);
+      } else {
+        if (mp3PlayPause) mp3PlayPause.textContent = '▶';
       }
+    }
+
+    function playPrev() {
+      if (currentSongIndex > 0) {
+        playSong(currentSongIndex - 1);
+      }
+    }
+
+    function togglePlayPause() {
+      if (!ytReady || !ytPlayer || currentSongIndex === -1) {
+        if (sharedState.musica.songs.length > 0) playSong(0);
+        return;
+      }
+      const state = ytPlayer.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        ytPlayer.pauseVideo();
+      } else {
+        ytPlayer.playVideo();
+      }
+    }
+
+    // Controles del reproductor
+    if (mp3PlayPause) mp3PlayPause.addEventListener('click', togglePlayPause);
+    if (mp3Next) mp3Next.addEventListener('click', playNext);
+    if (mp3Prev) mp3Prev.addEventListener('click', playPrev);
+
+    // Volumen
+    if (mp3Volume) {
+      mp3Volume.addEventListener('input', (e) => {
+        if (ytReady && ytPlayer) {
+          ytPlayer.setVolume(parseInt(e.target.value));
+        }
+      });
+    }
+
+    // Seek (click en la barra de progreso)
+    if (mp3Progress) {
+      mp3Progress.addEventListener('click', (e) => {
+        if (!ytReady || !ytPlayer || !ytPlayer.getDuration) return;
+        const rect = mp3Progress.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        const total = ytPlayer.getDuration() || 0;
+        if (total > 0) {
+          ytPlayer.seekTo(pct * total, true);
+        }
+      });
     }
 
     function moveSong(idx, dir) {
@@ -626,7 +773,13 @@
       if (currentSongIndex === idx) {
         currentSongIndex = -1;
         if (ytReady && ytPlayer) ytPlayer.stopVideo();
-        playerInfo.innerHTML = '<p class="player-now">▶ Selecciona una canción para empezar</p>';
+        if (mp3PlayPause) mp3PlayPause.textContent = '▶';
+        if (mp3Title) mp3Title.textContent = 'Selecciona una canción';
+        if (mp3Folder) mp3Folder.textContent = '—';
+        if (mp3CoverImg) mp3CoverImg.style.display = 'none';
+        if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'block';
+        if (mp3DownloadRow) mp3DownloadRow.style.display = 'none';
+        stopProgressTracking();
       } else if (currentSongIndex > idx) {
         currentSongIndex--;
       }
@@ -644,7 +797,7 @@
       }
 
       // Obtener el título vía oEmbed (gratuito, sin API key)
-      let title = `https://youtube.com/watch?v=${id}`;
+      let title = `Canción ${sharedState.musica.songs.length + 1}`;
       try {
         const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
         if (res.ok) {
@@ -653,16 +806,25 @@
         }
       } catch (e) {}
 
+      // URL para descargar MP3 vía y2mate (servicio externo)
+      const downloadUrl = `https://www.y2mate.com/youtube/${id}`;
+
       sharedState.musica.songs.push({
         id,
         title,
         url: `https://youtube.com/watch?v=${id}`,
+        downloadUrl,
         folder: folderSelect.value || '',
         addedAt: Date.now()
       });
       input.value = '';
       renderList();
       scheduleSave();
+
+      // Auto-reproducir la primera canción que se agrega
+      if (sharedState.musica.songs.length === 1) {
+        setTimeout(() => playSong(0), 300);
+      }
     }
 
     addBtn.addEventListener('click', addSong);
@@ -848,13 +1010,48 @@
         folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
         info.appendChild(title);
         info.appendChild(folder);
+
+        const actions = document.createElement('div');
+        actions.className = 'musica-actions';
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'musica-action-btn download';
+        downloadBtn.textContent = '⬇';
+        downloadBtn.title = 'Descargar MP3';
+        downloadBtn.onclick = (e) => {
+          e.stopPropagation();
+          window.open(song.downloadUrl || `https://www.y2mate.com/youtube/${song.id}`, '_blank', 'noopener');
+        };
+        actions.appendChild(downloadBtn);
+
         li.appendChild(thumb);
         li.appendChild(info);
+        li.appendChild(actions);
         li.onclick = () => {
+          // Llamar a playSong a través de initMusica - simplificado: carga directo
           if (ytReady && ytPlayer) {
             ytPlayer.loadVideoById(song.id);
             ytPlayer.playVideo();
           }
+          // Actualizar UI
+          const mp3CoverImg = document.getElementById('mp3CoverImg');
+          const mp3CoverPlaceholder = document.querySelector('.mp3-cover-placeholder');
+          const mp3Title = document.getElementById('mp3Title');
+          const mp3Folder = document.getElementById('mp3Folder');
+          const mp3DownloadRow = document.getElementById('mp3DownloadRow');
+          const mp3DownloadBtn = document.getElementById('mp3DownloadBtn');
+          if (mp3CoverImg) {
+            mp3CoverImg.src = `https://img.youtube.com/vi/${song.id}/hqdefault.jpg`;
+            mp3CoverImg.style.display = 'block';
+          }
+          if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'none';
+          if (mp3Title) mp3Title.textContent = song.title;
+          if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
+          if (mp3DownloadRow) mp3DownloadRow.style.display = 'flex';
+          if (mp3DownloadBtn) mp3DownloadBtn.href = song.downloadUrl || `https://www.y2mate.com/youtube/${song.id}`;
+
+          // Quitar selección anterior
+          musicaList.querySelectorAll('.musica-item').forEach(item => item.classList.remove('playing'));
+          li.classList.add('playing');
         };
         musicaList.appendChild(li);
       });

@@ -385,29 +385,214 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-#youtubePlayer {
+/* YouTube player oculto (solo audio) */
+.yt-hidden {
+  position: absolute;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden;
+  left: -9999px;
+  top: -9999px;
+  pointer-events: none;
+}
+
+/* ====== Reproductor tipo MP3 ====== */
+.mp3-player {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mp3-cover {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 6px;
+  max-height: 260px;
+  background: linear-gradient(135deg, var(--purple-900), var(--purple-700));
+  border: 1px solid #000;
+  border-radius: 8px;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#youtubePlayer iframe {
+.mp3-cover img {
   width: 100%;
   height: 100%;
-  border: none;
+  object-fit: cover;
+  display: block;
 }
 
-.player-info {
-  margin-top: 12px;
+.mp3-cover-placeholder {
+  font-size: 5rem;
+  opacity: 0.3;
+}
+
+.mp3-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mp3-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--white);
   text-align: center;
 }
 
-.player-now {
-  font-family: var(--font-title);
-  font-size: 1rem;
+.mp3-folder {
+  font-size: 0.8rem;
+  color: var(--purple-300);
+  text-align: center;
+}
+
+.mp3-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.mp3-time {
+  font-size: 0.75rem;
+  color: var(--gray-300);
+  min-width: 36px;
+  font-family: 'Inter', monospace;
+}
+
+.mp3-progress {
+  flex: 1;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.mp3-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--grad-bot);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s linear;
+}
+
+.mp3-progress-handle {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: var(--white);
+  border: 2px solid var(--purple-500);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: left 0.3s linear;
+}
+
+.mp3-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.mp3-btn {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  background: rgba(74, 44, 122, 0.6);
   color: var(--white);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mp3-btn:hover {
+  background: var(--purple-600);
+  transform: scale(1.1);
+}
+
+.mp3-play-btn {
+  width: 56px;
+  height: 56px;
+  background: var(--grad-bot);
+  font-size: 1.3rem;
+  border: 1.5px solid var(--purple-300);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.mp3-play-btn:hover {
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.6);
+}
+
+.mp3-volume-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 16px;
+}
+
+.mp3-vol-icon {
+  font-size: 0.95rem;
+}
+
+.mp3-volume {
+  width: 80px;
+  height: 4px;
+  cursor: pointer;
+  accent-color: var(--purple-400);
+}
+
+.mp3-download-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 6px;
+  flex-wrap: wrap;
+}
+
+.mp3-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--grad-bot);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid var(--purple-300);
+  transition: all 0.2s ease;
+}
+
+.mp3-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.mp3-download-hint {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  font-style: italic;
 }
 
 .musica-list-area {
@@ -538,6 +723,10 @@
 
 .musica-action-btn.delete:hover {
   background: #e63946;
+}
+
+.musica-action-btn.download:hover {
+  background: var(--purple-600);
 }
 
 @media (max-width: 900px) {

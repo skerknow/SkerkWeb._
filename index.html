@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Cumpleaños Valeria 🎂</title>
+  <meta name="description" content="Una página especial para celebrar el cumpleaños de Valeria. 🎉" />
+
+  <!-- Fuentes bonitas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Confeti canvas de fondo -->
+  <canvas id="confetti"></canvas>
+
+  <!-- Drawer del menú hamburguesa -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="drawer">
+    <button class="drawer-close" id="drawerClose" aria-label="Cerrar menú">✕</button>
+    <h3 class="drawer-title">Menú</h3>
+    <nav class="drawer-nav">
+      <a href="#inicio" class="drawer-link">🏠 Inicio</a>
+      <a href="#mensaje" class="drawer-link">💌 Mensaje</a>
+      <a href="#video" class="drawer-link">🎬 Video</a>
+      <a href="#charla" class="drawer-link">💬 Charla</a>
+      <a href="#fotos" class="drawer-link">📷 Fotos</a>
+      <a href="#cartas" class="drawer-link">✉️ Cartas</a>
+      <a href="creador.html" class="drawer-link">👤 Creador</a>
+    </nav>
+    <p class="drawer-footer">Hecho con 💖 para Valeria</p>
+  </aside>
+
+  <div class="app-container">
+
+    <!-- ============ SIDEBAR IZQUIERDA ============ -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <span class="sidebar-balloons">🎈🎈🎈</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="btn-sidebar" data-target="charla">
+          <span class="btn-icon">💬</span>
+          <span class="btn-text">CHARLA</span>
+        </button>
+        <button class="btn-sidebar" data-target="fotos">
+          <span class="btn-icon">📷</span>
+          <span class="btn-text">FOTOS</span>
+        </button>
+        <button class="btn-sidebar" data-target="cartas">
+          <span class="btn-icon">✉️</span>
+          <span class="btn-text">CARTAS</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <p class="sidebar-footer-text">FELIZ CUMPLEAÑOS<br><span class="brand-name">VALERIA</span> :D</p>
+      </div>
+    </aside>
+
+    <!-- ============ CONTENIDO PRINCIPAL ============ -->
+    <main class="main-content" id="inicio">
+
+      <!-- Header con título y botones -->
+      <header class="main-header">
+        <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="title-box">
+          <h1 class="title">FELIZ CUMPLEAÑOS VALERIA</h1>
+          <p class="subtitle">28 de julio · 🎂 🎉 🎈</p>
+        </div>
+
+        <a href="creador.html" class="btn-creator">
+          <span>CREADOR</span>
+        </a>
+      </header>
+
+      <!-- Grid de contenido: texto + video -->
+      <section class="content-grid">
+        <!-- Caja de texto editable -->
+        <article class="card text-card" id="mensaje">
+          <div class="card-header">
+            <span class="card-tag">💌 Mensaje</span>
+            <span class="card-hint" id="editHint">✏️ Puedes escribir aquí</span>
+          </div>
+          <div
+            class="editable-text"
+            id="editableMessage"
+            contenteditable="true"
+            spellcheck="false"
+          >Aquí va un mensaje muy especial para ti, Valeria. Eres una persona increíble y hoy es tu día. ¡Que la vida te regale todo lo que te mereces! 🌸✨<br><br><span class="placeholder-hint">(Escribe lo que quieras aquí...)</span></div>
+        </article>
+
+        <!-- Caja del video -->
+        <article class="card video-card" id="video">
+          <div class="card-header">
+            <span class="card-tag">🎬 Video</span>
+            <span class="card-hint">Para ti</span>
+          </div>
+          <div class="video-wrapper">
+            <video
+              controls
+              loop
+              playsinline
+              preload="metadata"
+              poster=""
+            >
+              <source src="assets/video/valee.mp4" type="video/mp4" />
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </article>
+      </section>
+
+      <!-- Sección CHARLA (placeholder) -->
+      <section class="extra-section" id="charla">
+        <h2 class="section-title">💬 Charla</h2>
+        <p class="section-desc">Próximamente: un espacio para dejar comentarios en vivo.</p>
+      </section>
+
+      <!-- Sección FOTOS (placeholder con filtros) -->
+      <section class="extra-section" id="fotos">
+        <h2 class="section-title">📷 Fotos</h2>
+        <p class="section-desc">Próximamente: galería de fotos con filtros por categoría.</p>
+      </section>
+
+      <!-- Sección CARTAS (placeholder) -->
+      <section class="extra-section" id="cartas">
+        <h2 class="section-title">✉️ Cartas</h2>
+        <p class="section-desc">Próximamente: cartas digitales de amigos y familia.</p>
+      </section>
+
+      <!-- Botón flotante BOT -->
+      <button class="btn-bot" id="btnBot" aria-label="Abrir chat con el bot">
+        <span class="bot-emoji">🤖</span>
+        <span class="bot-label">BOT</span>
+      </button>
+
+    </main>
+  </div>
+
+  <!-- ============ CHATBOT MODAL ============ -->
+  <div class="chat-overlay" id="chatOverlay"></div>
+  <div class="chat-widget" id="chatWidget" aria-hidden="true">
+    <header class="chat-header">
+      <div class="chat-bot-info">
+        <span class="chat-avatar">🤖</span>
+        <div>
+          <p class="chat-name">Bot Val 🎂</p>
+          <p class="chat-status">En línea · siempre para ti</p>
+        </div>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">✕</button>
+    </header>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot-msg">
+        ¡Hola Valeria! 🎉 Antes que nada: <strong>¡FELIZ CUMPLEAÑOS! 🎂</strong> Soy Bot Val, estoy aquí para darte buenos deseos y acompañarte hoy. ¿Cómo te sientes en tu día especial?
+      </div>
+    </div>
+
+    <form class="chat-input-row" id="chatForm">
+      <input
+        type="text"
+        id="chatInput"
+        class="chat-input"
+        placeholder="Escríbele al bot..."
+        autocomplete="off"
+      />
+      <button type="submit" class="chat-send" aria-label="Enviar">➤</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

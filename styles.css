@@ -1,0 +1,804 @@
+/* ============================================
+   FELIZ CUMPLEAÑOS VALERIA 🎂
+   Estilo: Creativo colorido + estructura boceto
+   ============================================ */
+
+:root {
+  /* Paleta principal (basada en boceto) */
+  --black: #0d0d0d;
+  --red: #e63946;
+  --red-dark: #c1121f;
+  --white: #ffffff;
+  --cream: #fff8f0;
+
+  /* Acentos creativos */
+  --pink: #ff6b9d;
+  --yellow: #ffd23f;
+  --purple: #9b5de5;
+  --teal: #06d6a0;
+  --blue: #4cc9f0;
+
+  /* Tipografías */
+  --font-title: 'Fraunces', serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Bordes */
+  --border-thick: 3px solid var(--black);
+  --border-red: 2.5px solid var(--red);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--black);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Fondo decorativo con manchas de color */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255, 107, 157, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(155, 93, 229, 0.18), transparent 45%),
+    radial-gradient(circle at 70% 10%, rgba(255, 210, 63, 0.22), transparent 35%),
+    radial-gradient(circle at 20% 90%, rgba(6, 214, 160, 0.15), transparent 40%),
+    var(--cream);
+  pointer-events: none;
+}
+
+/* Confeti canvas */
+#confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* ============================================
+   APP CONTAINER
+   ============================================ */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SIDEBAR IZQUIERDA
+   ============================================ */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--white);
+  border-right: var(--border-thick);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-shadow: 6px 0 0 var(--red);
+}
+
+.sidebar-balloons {
+  font-size: 2rem;
+  text-align: center;
+  letter-spacing: 4px;
+  animation: float 3s ease-in-out infinite;
+  display: block;
+  margin-bottom: 20px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-sidebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 18px;
+  border: var(--border-red);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--yellow), var(--pink));
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  z-index: 0;
+}
+
+.btn-sidebar:hover::before { transform: translateX(0); }
+.btn-sidebar:hover { color: var(--white); border-color: var(--black); }
+.btn-sidebar:hover .btn-icon { transform: scale(1.2) rotate(-8deg); }
+
+.btn-icon, .btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-icon { font-size: 1.2rem; transition: transform 0.3s ease; }
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 2px dashed var(--red);
+  text-align: center;
+}
+
+.sidebar-footer-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--black);
+}
+
+.brand-name {
+  font-family: var(--font-script);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--red);
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+  flex: 1;
+  padding: 50px 60px 100px;
+  position: relative;
+}
+
+/* ===== HEADER ===== */
+.main-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 70px;
+  flex-wrap: wrap;
+}
+
+.btn-menu {
+  width: 50px;
+  height: 50px;
+  border: var(--border-red);
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.btn-menu span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.btn-menu:hover {
+  background: var(--yellow);
+  transform: rotate(-3deg) scale(1.05);
+}
+
+.title-box {
+  flex: 1;
+  text-align: center;
+  border: var(--border-thick);
+  border-radius: 16px;
+  background: var(--white);
+  padding: 22px 36px;
+  box-shadow: 6px 6px 0 var(--red);
+  position: relative;
+  min-width: 280px;
+}
+
+.title-box::before, .title-box::after {
+  content: '🎉';
+  position: absolute;
+  top: -16px;
+  font-size: 1.5rem;
+}
+.title-box::before { left: 20px; }
+.title-box::after { right: 20px; }
+
+.title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  letter-spacing: 1px;
+  color: var(--black);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  color: var(--red);
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.btn-creator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border: var(--border-red);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.btn-creator:hover {
+  background: var(--purple);
+  color: var(--white);
+  border-color: var(--black);
+  transform: translateY(-3px) rotate(-2deg);
+}
+
+/* ===== CONTENT GRID ===== */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 40px;
+  margin-bottom: 80px;
+}
+
+.card {
+  background: var(--white);
+  border: var(--border-thick);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 8px 8px 0 var(--red);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 12px 12px 0 var(--red);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--black);
+}
+
+.card-tag {
+  font-family: var(--font-script);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--red);
+}
+
+.card-hint {
+  font-size: 0.75rem;
+  color: #777;
+  font-style: italic;
+}
+
+/* Texto editable */
+.text-card { display: flex; flex-direction: column; }
+
+.editable-text {
+  flex: 1;
+  min-height: 220px;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--black);
+  padding: 16px;
+  border: 2px dashed var(--purple);
+  border-radius: 12px;
+  background: var(--cream);
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.editable-text:focus {
+  border-color: var(--red);
+  border-style: solid;
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.15);
+}
+
+.placeholder-hint {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
+}
+
+/* Video */
+.video-card { display: flex; flex-direction: column; }
+
+.video-wrapper {
+  flex: 1;
+  min-height: 380px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--black);
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== SECCIONES EXTRA ===== */
+.extra-section {
+  background: var(--white);
+  border: var(--border-thick);
+  border-radius: 18px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: 6px 6px 0 var(--purple);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.extra-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: var(--black);
+}
+
+.section-desc {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* ===== BOTÓN FLOTANTE BOT ===== */
+.btn-bot {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 28px;
+  border: var(--border-red);
+  border-radius: 999px;
+  background: var(--white);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: var(--black);
+  box-shadow: 0 6px 0 var(--red), 0 10px 25px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+  z-index: 50;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.btn-bot:hover {
+  background: var(--yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 var(--red), 0 14px 30px rgba(0,0,0,0.2);
+}
+
+.btn-bot:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--red);
+}
+
+.bot-emoji { font-size: 1.3rem; }
+
+/* ============================================
+   DRAWER (menú hamburguesa)
+   ============================================ */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 100;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  max-width: 80vw;
+  height: 100vh;
+  background: var(--white);
+  border-right: var(--border-thick);
+  box-shadow: 6px 0 0 var(--red);
+  padding: 30px 24px;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer.is-open { transform: translateX(0); }
+
+.drawer-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--black);
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.drawer-close:hover {
+  background: var(--red);
+  color: var(--white);
+  transform: rotate(90deg);
+}
+
+.drawer-title {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  color: var(--red);
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: var(--black);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.drawer-link:hover {
+  background: var(--yellow);
+  transform: translateX(6px);
+}
+
+.drawer-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 2px dashed var(--red);
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  color: var(--red);
+  text-align: center;
+}
+
+/* ============================================
+   CHAT WIDGET
+   ============================================ */
+.chat-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 200;
+}
+
+.chat-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.chat-widget {
+  position: fixed;
+  bottom: 110px;
+  right: 40px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 520px;
+  max-height: calc(100vh - 140px);
+  background: var(--white);
+  border: var(--border-thick);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 201;
+  overflow: hidden;
+}
+
+.chat-widget.is-open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.chat-header {
+  background: linear-gradient(135deg, var(--red), var(--pink));
+  color: var(--white);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--black);
+}
+
+.chat-bot-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-avatar {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--black);
+}
+
+.chat-name {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.chat-status {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.chat-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--white);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.chat-close:hover {
+  background: var(--white);
+  color: var(--red);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--cream);
+}
+
+.msg {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  animation: msgIn 0.3s ease;
+}
+
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bot-msg {
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+
+.user-msg {
+  background: linear-gradient(135deg, var(--red), var(--pink));
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.chat-input-row {
+  display: flex;
+  padding: 12px;
+  border-top: 2px solid var(--black);
+  background: var(--white);
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.chat-input:focus { border-color: var(--red); }
+
+.chat-send {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-send:hover {
+  background: var(--red-dark);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    transition: left 0.35s ease;
+    z-index: 90;
+    box-shadow: none;
+  }
+  .sidebar.is-open {
+    left: 0;
+    box-shadow: 6px 0 0 var(--red);
+  }
+  .main-content {
+    padding: 30px 24px 100px;
+  }
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .btn-bot {
+    bottom: 24px;
+    right: 24px;
+    padding: 14px 22px;
+  }
+  .chat-widget {
+    right: 16px;
+    bottom: 90px;
+    width: calc(100vw - 32px);
+  }
+  .title-box::before, .title-box::after { display: none; }
+}
+
+@media (max-width: 600px) {
+  .main-header {
+    gap: 12px;
+  }
+  .btn-creator { padding: 10px 16px; font-size: 0.8rem; }
+  .video-wrapper { min-height: 280px; }
+  .editable-text { min-height: 180px; font-size: 1rem; }
+}
+
+/* Scrollbar bonita */
+.chat-messages::-webkit-scrollbar { width: 8px; }
+.chat-messages::-webkit-scrollbar-track { background: var(--cream); }
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border-radius: 4px;
+}

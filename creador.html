@@ -6,146 +6,335 @@
   <title>El Creador · Para Valeria</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .creator-body {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 60px 24px 120px;
+    /* ====== Layout específico de la página del creador ====== */
+    .creator-page {
       position: relative;
       z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 48px 36px 120px;
+      min-height: 100vh;
     }
-    .back-link {
+
+    /* Botón Volver (esquina superior izquierda) */
+    .back-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 12px 22px;
       border: 1.5px solid var(--purple-400);
-      border-radius: 12px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       color: var(--white);
       text-decoration: none;
-      font-weight: 600;
+      font-family: var(--font-body);
+      font-weight: 700;
       font-size: 0.9rem;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-      margin-bottom: 40px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 36px;
     }
-    .back-link:hover {
+    .back-btn:hover {
       background: var(--grad-primary);
       border-color: transparent;
       transform: translateX(-4px);
       box-shadow: var(--shadow-purple);
     }
-    .creator-hero {
-      text-align: center;
-      padding: 60px 30px 50px;
-      border-radius: 24px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(167, 139, 250, 0.3);
-      box-shadow: var(--shadow-md);
-      margin-bottom: 36px;
-      position: relative;
-      overflow: hidden;
+
+    /* Grid de 2 columnas */
+    .creator-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: start;
     }
-    .creator-hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: var(--grad-primary);
-    }
-    .creator-avatar {
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 24px;
-      border-radius: 50%;
-      background: var(--grad-bot);
+
+    .creator-col-left {
       display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .creator-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
       align-items: center;
-      justify-content: center;
-      font-size: 4.5rem;
-      border: 2px solid rgba(167, 139, 250, 0.5);
-      box-shadow: var(--shadow-purple);
     }
-    .creator-name {
-      font-family: var(--font-title);
-      font-weight: 900;
-      font-size: 2.6rem;
-      background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-    .creator-role {
-      font-family: var(--font-script);
-      font-size: 1.7rem;
-      color: var(--purple-300);
-      margin-bottom: 22px;
-    }
-    .creator-bio {
-      font-family: var(--font-title);
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--gray-200);
-      max-width: 580px;
-      margin: 0 auto;
-    }
-    .placeholder-card {
+
+    /* ====== Cajas con borde ====== */
+    .creator-card {
       background: var(--grad-card);
-      border-radius: 20px;
-      padding: 32px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(167, 139, 250, 0.2);
+      border-radius: 14px;
+      padding: 26px;
       position: relative;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(167, 139, 250, 0.25);
       overflow: hidden;
     }
-    .placeholder-card::before {
+    .creator-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
       background: var(--grad-primary);
     }
-    .placeholder-card h2 {
-      font-family: var(--font-title);
+
+    /* ====== Bloque de texto motivacional ====== */
+    .creator-message {
+      color: var(--gray-900);
+      font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: 1.6rem;
-      margin-bottom: 12px;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .creator-message .highlight {
+      background: linear-gradient(120deg, transparent 0%, rgba(167, 139, 250, 0.3) 50%, transparent 100%);
+      padding: 0 4px;
+    }
+    .creator-message .accent {
       background: var(--grad-primary);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-weight: 900;
     }
-    .placeholder-card p {
-      color: var(--gray-500);
-      line-height: 1.6;
+
+    /* ====== Video del gato girando ====== */
+    .cat-video-card {
+      border-radius: 20px;
+      padding: 14px;
+      background: var(--grad-card);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      position: relative;
+      overflow: hidden;
     }
-    .placeholder-card .editable {
-      margin-top: 18px;
-      padding: 18px;
-      border: 2px dashed var(--purple-300);
-      border-radius: 12px;
-      min-height: 100px;
-      font-family: var(--font-title);
+    .cat-video-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad-primary);
+    }
+    .cat-video-wrapper {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: 360px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--purple-900), var(--purple-700));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .cat-video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cat-video-placeholder {
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
       font-size: 1rem;
-      color: var(--gray-900);
-      outline: none;
-      background: rgba(237, 233, 254, 0.3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 24px;
+      line-height: 1.6;
+      animation: spin-text 4s ease-in-out infinite;
+    }
+    @keyframes spin-text {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    .cat-video-placeholder .emoji {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 12px;
+      animation: cat-spin 2.5s linear infinite;
+    }
+    @keyframes cat-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ====== Foto del oso (avatar del creador) ====== */
+    .creator-photo-card {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 4 / 5;
+      border-radius: 14px;
+      padding: 16px;
+      background: var(--grad-card);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .creator-photo-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad-primary);
+    }
+    .creator-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #1a1a24;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      /* Animación sutil */
+      animation: photo-float 5s ease-in-out infinite;
+    }
+    @keyframes photo-float {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    /* ====== Texto de presentación ====== */
+    .creator-intro-card {
+      width: 100%;
+      max-width: 380px;
+      padding: 22px 24px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(74, 44, 122, 0.25));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .creator-intro {
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .creator-intro .name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #ffffff, #c4b5fd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: none;
+      display: inline-block;
+      margin: 0 4px;
+    }
+    .creator-intro .for {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.6rem;
+      color: var(--purple-300);
+      text-transform: none;
+      display: inline-block;
+      margin-left: 4px;
+    }
+
+    /* ====== Iconos de redes sociales ====== */
+    .social-row {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .social-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--grad-card);
+      border: 1.5px solid rgba(167, 139, 250, 0.4);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .social-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--grad-primary);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+    .social-icon:hover::before { transform: translateY(0); }
+    .social-icon:hover {
+      transform: translateY(-6px) rotate(-3deg);
+      box-shadow: var(--shadow-purple);
+      border-color: transparent;
+    }
+    .social-icon svg {
+      width: 36px;
+      height: 36px;
+      position: relative;
+      z-index: 1;
       transition: all 0.3s ease;
     }
-    .placeholder-card .editable:focus {
-      border-color: var(--purple-500);
-      border-style: solid;
-      background: var(--white);
-      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+    .social-icon:hover svg {
+      filter: brightness(0) invert(1); /* Pone el SVG en blanco al hover */
+    }
+    .social-icon .label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      color: var(--purple-300);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+    }
+    .social-icon:hover .label { opacity: 1; }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 900px) {
+      .creator-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .creator-col-right {
+        align-items: stretch;
+      }
+      .creator-photo-card,
+      .creator-intro-card {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+    }
+    @media (max-width: 600px) {
+      .creator-page { padding: 32px 20px 100px; }
+      .creator-message { font-size: 0.95rem; line-height: 1.7; }
+      .creator-card { padding: 20px; }
+      .social-icon { width: 70px; height: 70px; }
+      .social-icon svg { width: 30px; height: 30px; }
+      .social-row { gap: 14px; }
     }
   </style>
 </head>
@@ -153,41 +342,108 @@
   <canvas id="confetti"></canvas>
   <div class="bg-halos" aria-hidden="true"></div>
 
-  <div class="creator-body">
-    <a href="index.html" class="back-link">← Volver al regalo</a>
+  <div class="creator-page">
 
-    <section class="creator-hero">
-      <div class="creator-avatar">🎨</div>
-      <h1 class="creator-name">El Creador</h1>
-      <p class="creator-role">El que hizo esto con cariño</p>
-      <p class="creator-bio">
-        Hola, soy yo. Hice esta página como regalo para alguien muy especial.
-        Aquí puedes escribir lo que quieras sobre ti, tu historia, lo que
-        significó hacer esto, etc. Este texto es editable: ¡puedes cambiarlo
-        cuando quieras!
-      </p>
-    </section>
+    <!-- Botón VOLVER AL REGALO -->
+    <a href="index.html" class="back-btn">← Volver al regalo</a>
 
-    <section class="placeholder-card">
-      <h2>Mi mensaje para Valeria</h2>
-      <p>Escribe aquí lo que quieras que ella sepa sobre ti y por qué hiciste esta página.</p>
-      <div class="editable" contenteditable="true">Aquí va tu mensaje personal como creador. Cuéntale quién eres, por qué decidiste hacerle este regalo, qué significa ella para ti... Lo que sientas.</div>
-    </section>
+    <!-- Grid principal 2 columnas -->
+    <div class="creator-grid">
 
-    <section class="placeholder-card">
-      <h2>Mis redes</h2>
-      <p>Puedes agregar aquí enlaces a tus perfiles sociales, sitio web, etc.</p>
-      <div class="editable" contenteditable="true">Instagram: @tu_usuario<br>GitHub: tu_usuario<br>Twitter: @tu_usuario</div>
-    </section>
+      <!-- ====== COLUMNA IZQUIERDA ====== -->
+      <div class="creator-col-left">
 
-    <section class="placeholder-card">
-      <h2>Notas finales</h2>
-      <p>Algo que quieras agregar al final.</p>
-      <div class="editable" contenteditable="true">Gracias por visitar esta página. Significa mucho.</div>
-    </section>
+        <!-- Bloque de texto motivacional -->
+        <article class="creator-card">
+          <p class="creator-message">
+            WENO ESTUDIAR EN LA UNI TRAE SUS VENTAJAS, GRACIAS A MI UNIVERSIDAD,
+            MIS METODOLOGÍA AUTODIDACTA ME FUE POSIBLE CREAR ESTA PÁGINA WEB,
+            LA HE CREADO CON <span class="accent">MUCHO CARIÑO</span> Y ESPERO
+            QUE PRONTO SE CUMPLAN TUS SUEÑOS, ASPIRAS A <span class="accent">GRANDES COSAS</span>
+            Y SÉ QUE LO LOGRARÁS
+          </p>
+        </article>
+
+        <!-- Video del gato girando -->
+        <article class="cat-video-card">
+          <div class="cat-video-wrapper" id="catVideoWrapper">
+            <!-- Placeholder animado hasta que el usuario mande el video -->
+            <div class="cat-video-placeholder" id="catVideoPlaceholder">
+              <span class="emoji">🐱</span>
+              Próximamente:<br>el gatito girando<br>con su audio auauau
+            </div>
+            <!-- Aquí se insertará el video cuando el usuario lo proporcione -->
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ====== COLUMNA DERECHA ====== -->
+      <div class="creator-col-right">
+
+        <!-- Foto del oso de Minecraft -->
+        <div class="creator-photo-card">
+          <img
+            src="assets/img/minecraft-bear.png"
+            alt="Foto del creador (oso de Minecraft)"
+            class="creator-photo"
+          />
+        </div>
+
+        <!-- Texto de presentación -->
+        <div class="creator-intro-card">
+          <p class="creator-intro">
+            QUE TAL, YO SOY EL CREADOR :)<br>
+            ME LLAMO <span class="name">JOSUÉ</span> Y LE DEJO<br>
+            ESTE REGALO <span class="for">a Valeria</span>
+          </p>
+        </div>
+
+        <!-- Iconos de redes sociales -->
+        <div class="social-row">
+          <a href="https://www.instagram.com/jxsleb._/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#feda75"/>
+                  <stop offset="25%" stop-color="#fa7e1e"/>
+                  <stop offset="50%" stop-color="#d62976"/>
+                  <stop offset="75%" stop-color="#962fbf"/>
+                  <stop offset="100%" stop-color="#4f5bd5"/>
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-grad)"/>
+              <circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
+            </svg>
+            <span class="label">Instagram</span>
+          </a>
+
+          <a href="https://www.tiktok.com/@skerknow_mc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="#000000"/>
+              <path d="M14 4v8.5a3 3 0 1 1-2.4-2.94V8.04a6 6 0 1 0 4.4 6.46V9.6a6.5 6.5 0 0 0 3.5 1V8.05a4.5 4.5 0 0 1-3.5-1.5V4z" fill="#fff"/>
+              <path d="M14 4v2.55a4.5 4.5 0 0 0 3.5 1.5v2.55a6.5 6.5 0 0 1-3.5-1V14.5a3 3 0 1 0-2.4-2.94V8.04a6 6 0 0 1 2.4 0V4z" fill="#ff0050"/>
+              <path d="M14 4v2.55a4.5 4.5 0 0 0 3.5 1.5v2.55a6.5 6.5 0 0 1-3.5-1V14.5a3 3 0 1 0-2.4-2.94V8.04a6 6 0 0 1 2.4 0V4z" fill="#00f2ea" transform="translate(0.6,0.6)"/>
+            </svg>
+            <span class="label">TikTok</span>
+          </a>
+
+          <a href="https://www.facebook.com/josue.salazarchamorro.1/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="#1877F2"/>
+              <path d="M15 9h-2v-1.5c0-.5.3-.7.8-.7H15V4.5h-2.5c-1.7 0-2.5 1-2.5 2.7V9H9v2.5h1V19h3v-7.5h1.8L15 9z" fill="#fff"/>
+            </svg>
+            <span class="label">Facebook</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <script>
+    // Reusar confeti (copia mínima)
     (function () {
       const canvas = document.getElementById('confetti');
       const ctx = canvas.getContext('2d');
@@ -229,17 +485,6 @@
         requestAnimationFrame(draw);
       }
       draw();
-
-      document.querySelectorAll('.editable').forEach((el, i) => {
-        const key = 'valeria_creator_block_' + i;
-        try {
-          const saved = localStorage.getItem(key);
-          if (saved) el.innerHTML = saved;
-        } catch (e) {}
-        el.addEventListener('input', () => {
-          try { localStorage.setItem(key, el.innerHTML); } catch (e) {}
-        });
-      });
     })();
   </script>
 </body>

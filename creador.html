@@ -144,40 +144,28 @@
       display: block;
     }
 
-    /* ====== Foto del oso (cuadrada, abarcando toda la imagen) ====== */
+    /* ====== Foto del oso (cuadrada, sin bordes curvos, imagen completa) ====== */
     .creator-photo-card {
-      width: 280px;
-      height: 280px;
+      width: 300px;
+      height: 300px;
       border: 1.5px solid #000;
-      border-radius: 10px;
+      border-radius: 0;
       padding: 0;
       background: #000;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       overflow: hidden;
       position: relative;
     }
-    .creator-photo-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
-      z-index: 2;
-    }
     .creator-photo {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
       display: block;
-      animation: photo-float 6s ease-in-out infinite;
-    }
-    @keyframes photo-float {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
+      background: #1a1a24;
     }
 
     /* ====== Texto de presentación ====== */
@@ -303,7 +291,7 @@
       .creator-card { padding: 20px; }
       .social-icon { width: 64px; height: 64px; }
       .social-row { gap: 14px; }
-      .creator-photo-card { width: 240px; height: 240px; }
+      .creator-photo-card { width: 240px; height: 240px; border-radius: 0; }
     }
   </style>
 </head>

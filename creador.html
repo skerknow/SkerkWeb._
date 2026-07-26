@@ -19,75 +19,73 @@
       min-height: 100vh;
     }
 
-    /* Botón Volver (esquina superior izquierda) */
+    /* Botón Volver */
     .back-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 22px;
-      border: 1.5px solid var(--purple-400);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      border: 1.5px solid #000;
+      border-radius: 6px;
+      background: rgba(45, 27, 78, 0.6);
       color: var(--white);
       text-decoration: none;
       font-family: var(--font-body);
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-bottom: 36px;
+      transition: all 0.25s ease;
+      margin-bottom: 32px;
     }
     .back-btn:hover {
-      background: var(--grad-primary);
-      border-color: transparent;
-      transform: translateX(-4px);
-      box-shadow: var(--shadow-purple);
+      background: var(--purple-600);
+      transform: translateX(-3px);
     }
 
     /* Grid de 2 columnas */
     .creator-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 36px;
+      gap: 32px;
       align-items: start;
     }
 
     .creator-col-left {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
     .creator-col-right {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
       align-items: center;
     }
 
-    /* ====== Cajas con borde ====== */
+    /* ====== Cajas con borde negro fino ====== */
     .creator-card {
-      background: var(--grad-card);
-      border-radius: 14px;
-      padding: 26px;
+      background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid #000;
+      border-radius: 10px;
+      padding: 24px;
       position: relative;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(167, 139, 250, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       overflow: hidden;
     }
     .creator-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--grad-primary);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
     }
 
     /* ====== Bloque de texto motivacional ====== */
     .creator-message {
-      color: var(--gray-900);
+      color: var(--white);
       font-family: 'Inter', sans-serif;
       font-weight: 700;
       font-size: 1.05rem;
@@ -95,26 +93,26 @@
       letter-spacing: 0.5px;
       text-transform: uppercase;
       text-align: left;
-    }
-    .creator-message .highlight {
-      background: linear-gradient(120deg, transparent 0%, rgba(167, 139, 250, 0.3) 50%, transparent 100%);
-      padding: 0 4px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
     .creator-message .accent {
-      background: var(--grad-primary);
+      background: linear-gradient(135deg, #c4b5fd, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 900;
+      text-shadow: none;
     }
 
     /* ====== Video del gato girando ====== */
     .cat-video-card {
-      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid #000;
+      border-radius: 10px;
       padding: 14px;
-      background: var(--grad-card);
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(167, 139, 250, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -122,111 +120,97 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--grad-primary);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
     }
     .cat-video-wrapper {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      max-height: 360px;
-      border-radius: 16px;
+      aspect-ratio: 9 / 16;
+      max-height: 480px;
+      margin: 0 auto;
+      border-radius: 6px;
       overflow: hidden;
-      background: linear-gradient(135deg, var(--purple-900), var(--purple-700));
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      border: 1px solid #000;
     }
     .cat-video-wrapper video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-    .cat-video-placeholder {
-      color: var(--white);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 24px;
-      line-height: 1.6;
-      animation: spin-text 4s ease-in-out infinite;
-    }
-    @keyframes spin-text {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
-    }
-    .cat-video-placeholder .emoji {
-      font-size: 3.5rem;
       display: block;
-      margin-bottom: 12px;
-      animation: cat-spin 2.5s linear infinite;
-    }
-    @keyframes cat-spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
     }
 
-    /* ====== Foto del oso (avatar del creador) ====== */
+    /* ====== Foto del oso (cuadrada, abarcando toda la imagen) ====== */
     .creator-photo-card {
-      width: 100%;
-      max-width: 380px;
-      aspect-ratio: 4 / 5;
-      border-radius: 14px;
-      padding: 16px;
-      background: var(--grad-card);
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(167, 139, 250, 0.25);
-      position: relative;
+      width: 280px;
+      height: 280px;
+      border: 1.5px solid #000;
+      border-radius: 10px;
+      padding: 0;
+      background: #000;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       overflow: hidden;
+      position: relative;
     }
     .creator-photo-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--grad-primary);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
+      z-index: 2;
     }
     .creator-photo {
       width: 100%;
       height: 100%;
-      border-radius: 10px;
       object-fit: cover;
-      background: #1a1a24;
+      object-position: center;
       image-rendering: pixelated;
       image-rendering: -moz-crisp-edges;
       image-rendering: crisp-edges;
-      /* Animación sutil */
-      animation: photo-float 5s ease-in-out infinite;
+      display: block;
+      animation: photo-float 6s ease-in-out infinite;
     }
     @keyframes photo-float {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+      50% { transform: scale(1.04); }
     }
 
     /* ====== Texto de presentación ====== */
     .creator-intro-card {
       width: 100%;
-      max-width: 380px;
-      padding: 22px 24px;
-      border-radius: 14px;
-      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(74, 44, 122, 0.25));
+      max-width: 320px;
+      padding: 18px 22px;
+      border: 1.5px solid #000;
+      border-radius: 10px;
+      background: linear-gradient(145deg, rgba(45, 27, 78, 0.75), rgba(74, 44, 122, 0.55));
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(167, 139, 250, 0.4);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .creator-intro-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
     }
     .creator-intro {
       color: var(--white);
       font-family: 'Inter', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.7;
       letter-spacing: 0.5px;
       text-transform: uppercase;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
     .creator-intro .name {
       font-family: 'Playfair Display', serif;
@@ -239,6 +223,7 @@
       text-transform: none;
       display: inline-block;
       margin: 0 4px;
+      text-shadow: none;
     }
     .creator-intro .for {
       font-family: 'Great Vibes', cursive;
@@ -249,7 +234,7 @@
       margin-left: 4px;
     }
 
-    /* ====== Iconos de redes sociales ====== */
+    /* ====== Iconos de redes sociales (logos oficiales, sin borde, cuadrados) ====== */
     .social-row {
       display: flex;
       gap: 18px;
@@ -258,55 +243,44 @@
       margin-top: 4px;
     }
     .social-icon {
-      width: 78px;
-      height: 78px;
-      border-radius: 16px;
+      width: 72px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--grad-card);
-      border: 1.5px solid rgba(167, 139, 250, 0.4);
-      box-shadow: var(--shadow-sm);
       text-decoration: none;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      border-radius: 8px;
       overflow: hidden;
+      /* Sin borde, sin fondo */
+      background: transparent;
+      border: none;
     }
-    .social-icon::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--grad-primary);
-      transform: translateY(100%);
+    .social-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 0;
     }
-    .social-icon:hover::before { transform: translateY(0); }
     .social-icon:hover {
-      transform: translateY(-6px) rotate(-3deg);
-      box-shadow: var(--shadow-purple);
-      border-color: transparent;
+      transform: translateY(-6px) scale(1.08);
     }
-    .social-icon svg {
-      width: 36px;
-      height: 36px;
-      position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
-    .social-icon:hover svg {
-      filter: brightness(0) invert(1); /* Pone el SVG en blanco al hover */
+    .social-icon:hover img {
+      transform: rotate(-8deg);
+      filter: drop-shadow(0 8px 16px rgba(167, 139, 250, 0.5));
     }
     .social-icon .label {
       position: absolute;
-      bottom: -28px;
+      bottom: -22px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--purple-300);
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 700;
       opacity: 0;
       transition: opacity 0.25s ease;
       white-space: nowrap;
@@ -320,21 +294,16 @@
         gap: 28px;
       }
       .creator-col-right {
-        align-items: stretch;
-      }
-      .creator-photo-card,
-      .creator-intro-card {
-        max-width: 100%;
-        margin: 0 auto;
+        align-items: center;
       }
     }
     @media (max-width: 600px) {
       .creator-page { padding: 32px 20px 100px; }
       .creator-message { font-size: 0.95rem; line-height: 1.7; }
       .creator-card { padding: 20px; }
-      .social-icon { width: 70px; height: 70px; }
-      .social-icon svg { width: 30px; height: 30px; }
+      .social-icon { width: 64px; height: 64px; }
       .social-row { gap: 14px; }
+      .creator-photo-card { width: 240px; height: 240px; }
     }
   </style>
 </head>
@@ -364,15 +333,18 @@
           </p>
         </article>
 
-        <!-- Video del gato girando -->
+        <!-- Video del gato girando (sin audio, en loop) -->
         <article class="cat-video-card">
-          <div class="cat-video-wrapper" id="catVideoWrapper">
-            <!-- Placeholder animado hasta que el usuario mande el video -->
-            <div class="cat-video-placeholder" id="catVideoPlaceholder">
-              <span class="emoji">🐱</span>
-              Próximamente:<br>el gatito girando<br>con su audio auauau
-            </div>
-            <!-- Aquí se insertará el video cuando el usuario lo proporcione -->
+          <div class="cat-video-wrapper">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+            >
+              <source src="assets/video/cat-spin.mp4" type="video/mp4" />
+            </video>
           </div>
         </article>
 
@@ -381,7 +353,7 @@
       <!-- ====== COLUMNA DERECHA ====== -->
       <div class="creator-col-right">
 
-        <!-- Foto del oso de Minecraft -->
+        <!-- Foto del oso de Minecraft (cuadrada) -->
         <div class="creator-photo-card">
           <img
             src="assets/img/minecraft-bear.png"
@@ -399,41 +371,20 @@
           </p>
         </div>
 
-        <!-- Iconos de redes sociales -->
+        <!-- Iconos de redes sociales (logos oficiales, sin borde) -->
         <div class="social-row">
           <a href="https://www.instagram.com/jxsleb._/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#feda75"/>
-                  <stop offset="25%" stop-color="#fa7e1e"/>
-                  <stop offset="50%" stop-color="#d62976"/>
-                  <stop offset="75%" stop-color="#962fbf"/>
-                  <stop offset="100%" stop-color="#4f5bd5"/>
-                </linearGradient>
-              </defs>
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-grad)"/>
-              <circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="2"/>
-              <circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/>
-            </svg>
+            <img src="assets/img/logo-instagram.png" alt="Instagram" />
             <span class="label">Instagram</span>
           </a>
 
           <a href="https://www.tiktok.com/@skerknow_mc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="#000000"/>
-              <path d="M14 4v8.5a3 3 0 1 1-2.4-2.94V8.04a6 6 0 1 0 4.4 6.46V9.6a6.5 6.5 0 0 0 3.5 1V8.05a4.5 4.5 0 0 1-3.5-1.5V4z" fill="#fff"/>
-              <path d="M14 4v2.55a4.5 4.5 0 0 0 3.5 1.5v2.55a6.5 6.5 0 0 1-3.5-1V14.5a3 3 0 1 0-2.4-2.94V8.04a6 6 0 0 1 2.4 0V4z" fill="#ff0050"/>
-              <path d="M14 4v2.55a4.5 4.5 0 0 0 3.5 1.5v2.55a6.5 6.5 0 0 1-3.5-1V14.5a3 3 0 1 0-2.4-2.94V8.04a6 6 0 0 1 2.4 0V4z" fill="#00f2ea" transform="translate(0.6,0.6)"/>
-            </svg>
+            <img src="assets/img/logo-tiktok.png" alt="TikTok" />
             <span class="label">TikTok</span>
           </a>
 
           <a href="https://www.facebook.com/josue.salazarchamorro.1/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="#1877F2"/>
-              <path d="M15 9h-2v-1.5c0-.5.3-.7.8-.7H15V4.5h-2.5c-1.7 0-2.5 1-2.5 2.7V9H9v2.5h1V19h3v-7.5h1.8L15 9z" fill="#fff"/>
-            </svg>
+            <img src="assets/img/logo-facebook.png" alt="Facebook" />
             <span class="label">Facebook</span>
           </a>
         </div>
@@ -443,7 +394,7 @@
   </div>
 
   <script>
-    // Reusar confeti (copia mínima)
+    // Confeti (copia mínima)
     (function () {
       const canvas = document.getElementById('confetti');
       const ctx = canvas.getContext('2d');

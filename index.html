@@ -6,7 +6,6 @@
   <title>Feliz Cumpleaños Valeria 🎂</title>
   <meta name="description" content="Una página especial para celebrar el cumpleaños de Valeria. 🎉" />
 
-  <!-- Fuentes: una serif elegante + una script + una sans para UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -15,10 +14,7 @@
 </head>
 <body>
 
-  <!-- Confeti de fondo -->
   <canvas id="confetti"></canvas>
-
-  <!-- Fondo con halos morados -->
   <div class="bg-halos" aria-hidden="true"></div>
 
   <!-- Drawer del menú hamburguesa -->
@@ -38,10 +34,9 @@
     <p class="drawer-footer">Feliz cumpleaños Valeria :D</p>
   </aside>
 
-  <!-- ============ CONTENIDO PRINCIPAL (sin sidebar) ============ -->
+  <!-- ============ CONTENIDO PRINCIPAL ============ -->
   <main class="main-content" id="inicio">
 
-    <!-- Header con título y botones -->
     <header class="main-header">
       <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">
         <span></span><span></span><span></span>
@@ -57,9 +52,7 @@
       </a>
     </header>
 
-    <!-- Grid de contenido: texto + video -->
     <section class="content-grid">
-      <!-- Caja de texto editable -->
       <article class="card text-card" id="mensaje">
         <div class="card-header">
           <span class="card-tag">Mensaje</span>
@@ -73,7 +66,6 @@
         >Aquí va un mensaje muy especial para ti, Valeria. Eres una persona increíble y hoy es tu día. ¡Que la vida te regale todo lo que te mereces!<br><br><span class="placeholder-hint">(Escribe lo que quieras aquí...)</span></div>
       </article>
 
-      <!-- Caja del video -->
       <article class="card video-card" id="video">
         <div class="card-header">
           <span class="card-tag">Video</span>
@@ -94,25 +86,21 @@
       </article>
     </section>
 
-    <!-- Sección CHARLA -->
     <section class="extra-section" id="charla">
       <h2 class="section-title">Charla</h2>
       <p class="section-desc">Próximamente: un espacio para dejar comentarios en vivo.</p>
     </section>
 
-    <!-- Sección FOTOS -->
     <section class="extra-section" id="fotos">
       <h2 class="section-title">Fotos</h2>
       <p class="section-desc">Próximamente: galería de fotos con filtros por categoría.</p>
     </section>
 
-    <!-- Sección CARTAS -->
     <section class="extra-section" id="cartas">
       <h2 class="section-title">Cartas</h2>
       <p class="section-desc">Próximamente: cartas digitales de amigos y familia.</p>
     </section>
 
-    <!-- Botón flotante BOT con imagen del robot -->
     <button class="btn-bot" id="btnBot" aria-label="Abrir chat con el bot">
       <img src="assets/img/bot-avatar.png" alt="Bot" class="bot-img" />
       <span class="bot-label">BOT</span>

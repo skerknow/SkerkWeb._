@@ -246,7 +246,8 @@
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  const colors = ['#e63946', '#ffd23f', '#06d6a0', '#9b5de5', '#4cc9f0', '#ff6b9d'];
+  // Paleta morada / blanco / gris (acorde a la nueva temática)
+  const colors = ['#8b5cf6', '#a78bfa', '#c4b5fd', '#6b3fa0', '#4a2c7a', '#ffffff', '#e4e4ec'];
 
   function createConfetti(count = 80) {
     confettiPieces = [];

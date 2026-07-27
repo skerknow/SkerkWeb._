@@ -385,48 +385,58 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* YouTube player oculto (solo audio) */
-.yt-hidden {
-  position: absolute;
-  width: 1px !important;
-  height: 1px !important;
+/* YouTube player VISIBLE */
+.yt-video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 400px;
+ background: linear-gradient(135deg, var(--purple-900), var(--purple-700));
+  border: 1px solid #000;
+  border-radius: 8px;
   overflow: hidden;
-  left: -9999px;
-  top: -9999px;
+}
+
+.yt-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+ border: none;
+}
+
+.yt-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--gray-400);
+  font-size: 1rem;
   pointer-events: none;
 }
 
-/* ====== Reproductor tipo MP3 ====== */
+.yt-placeholder span {
+  font-size: 4rem;
+  opacity: 0.3;
+}
+
+.yt-placeholder p {
+  font-style: italic;
+}
+
+.yt-placeholder.hidden {
+  display: none;
+}
+
+/* ====== Controles del reproductor ====== */
 .mp3-player {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.mp3-cover {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 260px;
-  background: linear-gradient(135deg, var(--purple-900), var(--purple-700));
-  border: 1px solid #000;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mp3-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.mp3-cover-placeholder {
-  font-size: 5rem;
-  opacity: 0.3;
 }
 
 .mp3-info {
@@ -557,43 +567,7 @@
   accent-color: var(--purple-400);
 }
 
-.mp3-download-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-  padding: 10px 12px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  border-radius: 6px;
-  flex-wrap: wrap;
-}
 
-.mp3-download-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: var(--grad-bot);
-  color: var(--white);
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  border: 1px solid var(--purple-300);
-  transition: all 0.2s ease;
-}
-
-.mp3-download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-}
-
-.mp3-download-hint {
-  font-size: 0.72rem;
-  color: var(--gray-400);
-  font-style: italic;
-}
 
 .musica-list-area {
   background: rgba(26, 10, 46, 0.7);
@@ -923,7 +897,7 @@
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  background: #000;
+  background: #0a0a0f;
   position: relative;
 }
 
@@ -939,8 +913,10 @@
 .foto-img {
   width: 100%;
   height: auto;
+  max-height: none;
   display: block;
   object-fit: contain;
+  object-position: center;
   image-rendering: auto;
 }
 

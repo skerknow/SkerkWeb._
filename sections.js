@@ -468,97 +468,9 @@
   }
 
   // =====================================================
-  // ============ MÚSICA (Reproductor tipo MP3) ============
+  // ============ MÚSICA (YouTube iframe directo) ============
   // =====================================================
-  let ytPlayer = null;
-  let ytReady = false;
   let currentSongIndex = -1;
-  let progressInterval = null;
-
-  // Exponer callback global para YouTube API
-  window.onYouTubeIframeAPIReady = function () {
-    ytPlayer = new YT.Player('youtubePlayer', {
-      height: '100%',
-      width: '100%',
-      videoId: '',
-      playerVars: {
-        autoplay: 0,
-        controls: 1,           // CON controles visibles (video)
-        disablekb: 0,
-        modestbranding: 1,
-        rel: 0,
-        playsinline: 1,
-        iv_load_policy: 3      // sin anotaciones
-      },
-      events: {
-        onReady: () => {
-          ytReady = true;
-          ytPlayer.setVolume(80);
-          // Hide placeholder when player is ready
-          const placeholder = document.getElementById('ytPlaceholder');
-          if (placeholder) placeholder.classList.add('hidden');
-        },
-        onStateChange: (e) => {
-          const playPauseBtn = document.getElementById('mp3PlayPause');
-          if (e.data === YT.PlayerState.PLAYING) {
-            if (playPauseBtn) playPauseBtn.textContent = '⏸';
-            startProgressTracking();
-            updateDuration();
-          } else if (e.data === YT.PlayerState.PAUSED) {
-            if (playPauseBtn) playPauseBtn.textContent = '▶';
-            stopProgressTracking();
-          } else if (e.data === YT.PlayerState.ENDED) {
-            if (playPauseBtn) playPauseBtn.textContent = '▶';
-            stopProgressTracking();
-            playNext();
-          }
-        }
-      }
-    });
-  };
-
-  function startProgressTracking() {
-    stopProgressTracking();
-    progressInterval = setInterval(updateProgress, 500);
-  }
-
-  function stopProgressTracking() {
-    if (progressInterval) {
-      clearInterval(progressInterval);
-      progressInterval = null;
-    }
-  }
-
-  function formatTime(seconds) {
-    if (!seconds || isNaN(seconds)) return '0:00';
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  }
-
-  function updateProgress() {
-    if (!ytReady || !ytPlayer || !ytPlayer.getCurrentTime) return;
-    const current = ytPlayer.getCurrentTime() || 0;
-    const total = ytPlayer.getDuration() || 0;
-    const pct = total > 0 ? (current / total) * 100 : 0;
-
-    const progressBar = document.getElementById('mp3ProgressBar');
-    const progressHandle = document.getElementById('mp3ProgressHandle');
-    const currentTimeEl = document.getElementById('mp3CurrentTime');
-    const durationEl = document.getElementById('mp3Duration');
-
-    if (progressBar) progressBar.style.width = pct + '%';
-    if (progressHandle) progressHandle.style.left = pct + '%';
-    if (currentTimeEl) currentTimeEl.textContent = formatTime(current);
-    if (durationEl) durationEl.textContent = formatTime(total);
-  }
-
-  function updateDuration() {
-    if (!ytReady || !ytPlayer || !ytPlayer.getDuration) return;
-    const total = ytPlayer.getDuration() || 0;
-    const durationEl = document.getElementById('mp3Duration');
-    if (durationEl) durationEl.textContent = formatTime(total);
-  }
 
   function extractYouTubeId(url) {
     if (!url) return null;
@@ -573,6 +485,22 @@
     return null;
   }
 
+  function playVideoById(videoId) {
+    const frame = document.getElementById('ytFrame');
+    const placeholder = document.getElementById('ytPlaceholder');
+    if (frame && videoId) {
+      frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+    }
+    if (placeholder) placeholder.classList.add('hidden');
+  }
+
+  function stopVideo() {
+    const frame = document.getElementById('ytFrame');
+    const placeholder = document.getElementById('ytPlaceholder');
+    if (frame) frame.src = '';
+    if (placeholder) placeholder.classList.remove('hidden');
+  }
+
   function initMusica() {
     const input = document.getElementById('musicaInput');
     const folderSelect = document.getElementById('musicaFolderSelect');
@@ -582,14 +510,9 @@
     const list = document.getElementById('musicaList');
     const count = document.getElementById('musicaCount');
 
-    // Elementos del reproductor
+    // Elementos info del reproductor
     const mp3Title = document.getElementById('mp3Title');
     const mp3Folder = document.getElementById('mp3Folder');
-    const mp3PlayPause = document.getElementById('mp3PlayPause');
-    const mp3Prev = document.getElementById('mp3Prev');
-    const mp3Next = document.getElementById('mp3Next');
-    const mp3Volume = document.getElementById('mp3Volume');
-    const mp3Progress = document.getElementById('mp3Progress');
 
     function renderFolders() {
       const current = folderSelect.value;
@@ -680,74 +603,14 @@
       const song = sharedState.musica.songs[idx];
       currentSongIndex = idx;
 
-      // Actualizar UI del reproductor
+      // Actualizar info
       if (mp3Title) mp3Title.textContent = song.title || `Canción ${idx + 1}`;
       if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
 
-      // Ocultar placeholder del video
-      const placeholder = document.getElementById('ytPlaceholder');
-      if (placeholder) placeholder.classList.add('hidden');
+      // Reproducir video YouTube directamente en el iframe
+      playVideoById(song.id);
 
-      // Reproducir video visible
-      if (ytReady && ytPlayer) {
-        ytPlayer.loadVideoById(song.id);
-        ytPlayer.playVideo();
-      }
       renderList();
-    }
-
-    function playNext() {
-      if (currentSongIndex >= 0 && currentSongIndex < sharedState.musica.songs.length - 1) {
-        playSong(currentSongIndex + 1);
-      } else {
-        if (mp3PlayPause) mp3PlayPause.textContent = '▶';
-      }
-    }
-
-    function playPrev() {
-      if (currentSongIndex > 0) {
-        playSong(currentSongIndex - 1);
-      }
-    }
-
-    function togglePlayPause() {
-      if (!ytReady || !ytPlayer || currentSongIndex === -1) {
-        if (sharedState.musica.songs.length > 0) playSong(0);
-        return;
-      }
-      const state = ytPlayer.getPlayerState();
-      if (state === YT.PlayerState.PLAYING) {
-        ytPlayer.pauseVideo();
-      } else {
-        ytPlayer.playVideo();
-      }
-    }
-
-    // Controles del reproductor
-    if (mp3PlayPause) mp3PlayPause.addEventListener('click', togglePlayPause);
-    if (mp3Next) mp3Next.addEventListener('click', playNext);
-    if (mp3Prev) mp3Prev.addEventListener('click', playPrev);
-
-    // Volumen
-    if (mp3Volume) {
-      mp3Volume.addEventListener('input', (e) => {
-        if (ytReady && ytPlayer) {
-          ytPlayer.setVolume(parseInt(e.target.value));
-        }
-      });
-    }
-
-    // Seek (click en la barra de progreso)
-    if (mp3Progress) {
-      mp3Progress.addEventListener('click', (e) => {
-        if (!ytReady || !ytPlayer || !ytPlayer.getDuration) return;
-        const rect = mp3Progress.getBoundingClientRect();
-        const pct = (e.clientX - rect.left) / rect.width;
-        const total = ytPlayer.getDuration() || 0;
-        if (total > 0) {
-          ytPlayer.seekTo(pct * total, true);
-        }
-      });
     }
 
     function moveSong(idx, dir) {
@@ -766,11 +629,9 @@
       sharedState.musica.songs.splice(idx, 1);
       if (currentSongIndex === idx) {
         currentSongIndex = -1;
-        if (ytReady && ytPlayer) ytPlayer.stopVideo();
-        if (mp3PlayPause) mp3PlayPause.textContent = '▶';
+        stopVideo();
         if (mp3Title) mp3Title.textContent = 'Selecciona una canción';
         if (mp3Folder) mp3Folder.textContent = '—';
-        stopProgressTracking();
       } else if (currentSongIndex > idx) {
         currentSongIndex--;
       }
@@ -1018,19 +879,14 @@
         li.appendChild(info);
         li.appendChild(actions);
         li.onclick = () => {
-          if (ytReady && ytPlayer) {
-            ytPlayer.loadVideoById(song.id);
-            ytPlayer.playVideo();
-          }
+          // Reproducir video YouTube directamente
+          playVideoById(song.id);
+
           // Actualizar UI
           const mp3Title = document.getElementById('mp3Title');
           const mp3Folder = document.getElementById('mp3Folder');
           if (mp3Title) mp3Title.textContent = song.title;
           if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
-
-          // Ocultar placeholder del video
-          const placeholder = document.getElementById('ytPlaceholder');
-          if (placeholder) placeholder.classList.add('hidden');
 
           // Quitar selección anterior
           musicaList.querySelectorAll('.musica-item').forEach(item => item.classList.remove('playing'));

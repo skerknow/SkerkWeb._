@@ -106,36 +106,29 @@
 
     /* ====== Video del gato girando ====== */
     .cat-video-card {
-      background: linear-gradient(145deg, rgba(45, 27, 78, 0.7), rgba(74, 44, 122, 0.5));
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid #000;
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
       position: relative;
       overflow: hidden;
-    }
-    .cat-video-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--purple-400), transparent);
     }
     .cat-video-wrapper {
       width: 100%;
       aspect-ratio: 9 / 16;
       max-height: 480px;
       margin: 0 auto;
-      border-radius: 6px;
+      border-radius: 0;
       overflow: hidden;
-      background: #000;
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      border: 1px solid #000;
+      border: none;
     }
     .cat-video-wrapper video {
       width: 100%;
@@ -222,59 +215,6 @@
       margin-left: 4px;
     }
 
-    /* ====== Iconos de redes sociales (logos oficiales, sin borde, cuadrados) ====== */
-    .social-row {
-      display: flex;
-      gap: 18px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-    .social-icon {
-      width: 72px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      /* Sin borde, sin fondo */
-      background: transparent;
-      border: none;
-    }
-    .social-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .social-icon:hover {
-      transform: translateY(-6px) scale(1.08);
-    }
-    .social-icon:hover img {
-      transform: rotate(-8deg);
-      filter: drop-shadow(0 8px 16px rgba(167, 139, 250, 0.5));
-    }
-    .social-icon .label {
-      position: absolute;
-      bottom: -22px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.65rem;
-      color: var(--purple-300);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-weight: 700;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      white-space: nowrap;
-    }
-    .social-icon:hover .label { opacity: 1; }
-
     /* ====== RESPONSIVE ====== */
     @media (max-width: 900px) {
       .creator-grid {
@@ -289,8 +229,6 @@
       .creator-page { padding: 32px 20px 100px; }
       .creator-message { font-size: 0.95rem; line-height: 1.7; }
       .creator-card { padding: 20px; }
-      .social-icon { width: 64px; height: 64px; }
-      .social-row { gap: 14px; }
       .creator-photo-card { width: 240px; height: 240px; border-radius: 0; }
     }
   </style>
@@ -314,10 +252,10 @@
         <article class="creator-card">
           <p class="creator-message">
             WENO ESTUDIAR EN LA UNI TRAE SUS VENTAJAS, GRACIAS A MI UNIVERSIDAD,
-            MIS METODOLOGÍA AUTODIDACTA ME FUE POSIBLE CREAR ESTA PÁGINA WEB,
+            MI METODOLOGÍA AUTODIDACTA ME FUE POSIBLE CREAR ESTA PÁGINA WEB,
             LA HE CREADO CON <span class="accent">MUCHO CARIÑO</span> Y ESPERO
             QUE PRONTO SE CUMPLAN TUS SUEÑOS, ASPIRAS A <span class="accent">GRANDES COSAS</span>
-            Y SÉ QUE LO LOGRARÁS
+            Y SÉ QUE LO LOGRARÁS.
           </p>
         </article>
 
@@ -359,23 +297,7 @@
           </p>
         </div>
 
-        <!-- Iconos de redes sociales (logos oficiales, sin borde) -->
-        <div class="social-row">
-          <a href="https://www.instagram.com/jxsleb._/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-            <img src="assets/img/logo-instagram.png" alt="Instagram" />
-            <span class="label">Instagram</span>
-          </a>
 
-          <a href="https://www.tiktok.com/@skerknow_mc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
-            <img src="assets/img/logo-tiktok.png" alt="TikTok" />
-            <span class="label">TikTok</span>
-          </a>
-
-          <a href="https://www.facebook.com/josue.salazarchamorro.1/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-            <img src="assets/img/logo-facebook.png" alt="Facebook" />
-            <span class="label">Facebook</span>
-          </a>
-        </div>
 
       </div>
     </div>

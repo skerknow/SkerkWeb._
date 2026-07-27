@@ -195,36 +195,19 @@
 
       <div class="musica-player-area">
         <div class="musica-player">
-          <!-- YouTube player VISIBLE con video -->
+          <!-- YouTube iframe directo -->
           <div class="yt-video-wrapper">
-            <div id="youtubePlayer"></div>
+            <iframe id="ytFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"></iframe>
             <div class="yt-placeholder" id="ytPlaceholder">
               <span>🎵</span>
-              <p>Selecciona una canción para ver el video</p>
+              <p>Pega un link de YouTube y reproduce el video aquí</p>
             </div>
           </div>
 
-          <!-- Info y controles debajo del video -->
+          <!-- Info de la canción actual -->
           <div class="mp3-info">
             <p class="mp3-title" id="mp3Title">Selecciona una canción</p>
             <p class="mp3-folder" id="mp3Folder">—</p>
-            <div class="mp3-progress-row">
-              <span class="mp3-time" id="mp3CurrentTime">0:00</span>
-              <div class="mp3-progress" id="mp3Progress">
-                <div class="mp3-progress-bar" id="mp3ProgressBar"></div>
-                <div class="mp3-progress-handle" id="mp3ProgressHandle"></div>
-              </div>
-              <span class="mp3-time" id="mp3Duration">0:00</span>
-            </div>
-            <div class="mp3-controls">
-              <button class="mp3-btn" id="mp3Prev" title="Anterior">⏮</button>
-              <button class="mp3-btn mp3-play-btn" id="mp3PlayPause" title="Reproducir">▶</button>
-              <button class="mp3-btn" id="mp3Next" title="Siguiente">⏭</button>
-              <div class="mp3-volume-row">
-                <span class="mp3-vol-icon">🔊</span>
-                <input type="range" id="mp3Volume" min="0" max="100" value="80" class="mp3-volume" />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -359,9 +342,6 @@
       <button type="submit" class="chat-send" aria-label="Enviar">➤</button>
     </form>
   </div>
-
-  <!-- YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
 
   <script src="script.js"></script>
   <script src="sections.js"></script>

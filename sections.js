@@ -478,13 +478,13 @@
   // Exponer callback global para YouTube API
   window.onYouTubeIframeAPIReady = function () {
     ytPlayer = new YT.Player('youtubePlayer', {
-      height: '1',     // 1px - completamente oculto
-      width: '1',
+      height: '100%',
+      width: '100%',
       videoId: '',
       playerVars: {
         autoplay: 0,
-        controls: 0,           // sin controles visibles
-        disablekb: 1,          // sin atajos de teclado
+        controls: 1,           // CON controles visibles (video)
+        disablekb: 0,
         modestbranding: 1,
         rel: 0,
         playsinline: 1,
@@ -494,6 +494,9 @@
         onReady: () => {
           ytReady = true;
           ytPlayer.setVolume(80);
+          // Hide placeholder when player is ready
+          const placeholder = document.getElementById('ytPlaceholder');
+          if (placeholder) placeholder.classList.add('hidden');
         },
         onStateChange: (e) => {
           const playPauseBtn = document.getElementById('mp3PlayPause');
@@ -579,9 +582,7 @@
     const list = document.getElementById('musicaList');
     const count = document.getElementById('musicaCount');
 
-    // Elementos del reproductor MP3
-    const mp3CoverImg = document.getElementById('mp3CoverImg');
-    const mp3CoverPlaceholder = document.querySelector('.mp3-cover-placeholder');
+    // Elementos del reproductor
     const mp3Title = document.getElementById('mp3Title');
     const mp3Folder = document.getElementById('mp3Folder');
     const mp3PlayPause = document.getElementById('mp3PlayPause');
@@ -589,8 +590,6 @@
     const mp3Next = document.getElementById('mp3Next');
     const mp3Volume = document.getElementById('mp3Volume');
     const mp3Progress = document.getElementById('mp3Progress');
-    const mp3DownloadRow = document.getElementById('mp3DownloadRow');
-    const mp3DownloadBtn = document.getElementById('mp3DownloadBtn');
 
     function renderFolders() {
       const current = folderSelect.value;
@@ -682,19 +681,14 @@
       currentSongIndex = idx;
 
       // Actualizar UI del reproductor
-      if (mp3CoverImg) {
-        mp3CoverImg.src = `https://img.youtube.com/vi/${song.id}/hqdefault.jpg`;
-        mp3CoverImg.style.display = 'block';
-      }
-      if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'none';
       if (mp3Title) mp3Title.textContent = song.title || `Canción ${idx + 1}`;
       if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
 
-      // Mostrar botón de descarga
-      if (mp3DownloadRow) mp3DownloadRow.style.display = 'flex';
-      if (mp3DownloadBtn) mp3DownloadBtn.href = song.downloadUrl;
+      // Ocultar placeholder del video
+      const placeholder = document.getElementById('ytPlaceholder');
+      if (placeholder) placeholder.classList.add('hidden');
 
-      // Reproducir audio (video oculto)
+      // Reproducir video visible
       if (ytReady && ytPlayer) {
         ytPlayer.loadVideoById(song.id);
         ytPlayer.playVideo();
@@ -776,9 +770,6 @@
         if (mp3PlayPause) mp3PlayPause.textContent = '▶';
         if (mp3Title) mp3Title.textContent = 'Selecciona una canción';
         if (mp3Folder) mp3Folder.textContent = '—';
-        if (mp3CoverImg) mp3CoverImg.style.display = 'none';
-        if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'block';
-        if (mp3DownloadRow) mp3DownloadRow.style.display = 'none';
         stopProgressTracking();
       } else if (currentSongIndex > idx) {
         currentSongIndex--;
@@ -1027,27 +1018,19 @@
         li.appendChild(info);
         li.appendChild(actions);
         li.onclick = () => {
-          // Llamar a playSong a través de initMusica - simplificado: carga directo
           if (ytReady && ytPlayer) {
             ytPlayer.loadVideoById(song.id);
             ytPlayer.playVideo();
           }
           // Actualizar UI
-          const mp3CoverImg = document.getElementById('mp3CoverImg');
-          const mp3CoverPlaceholder = document.querySelector('.mp3-cover-placeholder');
           const mp3Title = document.getElementById('mp3Title');
           const mp3Folder = document.getElementById('mp3Folder');
-          const mp3DownloadRow = document.getElementById('mp3DownloadRow');
-          const mp3DownloadBtn = document.getElementById('mp3DownloadBtn');
-          if (mp3CoverImg) {
-            mp3CoverImg.src = `https://img.youtube.com/vi/${song.id}/hqdefault.jpg`;
-            mp3CoverImg.style.display = 'block';
-          }
-          if (mp3CoverPlaceholder) mp3CoverPlaceholder.style.display = 'none';
           if (mp3Title) mp3Title.textContent = song.title;
           if (mp3Folder) mp3Folder.textContent = song.folder ? '📁 ' + song.folder : '🎵 Sin carpeta';
-          if (mp3DownloadRow) mp3DownloadRow.style.display = 'flex';
-          if (mp3DownloadBtn) mp3DownloadBtn.href = song.downloadUrl || `https://www.y2mate.com/youtube/${song.id}`;
+
+          // Ocultar placeholder del video
+          const placeholder = document.getElementById('ytPlaceholder');
+          if (placeholder) placeholder.classList.add('hidden');
 
           // Quitar selección anterior
           musicaList.querySelectorAll('.musica-item').forEach(item => item.classList.remove('playing'));
